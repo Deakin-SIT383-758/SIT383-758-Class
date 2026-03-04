@@ -1539,6 +1539,7 @@ UnityEngine.Texture::set_wrapMode_Injected
 UnityEngine.Texture::get_filterMode_Injected
 UnityEngine.Texture::GetDimension_Injected
 UnityEngine.Texture::get_wrapMode_Injected
+UnityEngine.Texture2D::Internal_CreateEmptyImpl
 UnityEngine.Texture2D::Internal_CreateImpl_Injected
 UnityEngine.Texture2D::ReinitializeImpl_Injected
 UnityEngine.Texture2D::ReinitializeWithTextureFormatImpl_Injected
@@ -1671,6 +1672,7 @@ UnityEngine.VFX.VFXSpawnerState::Internal_Destroy
 UnityEngine.VFX.VisualEffect::get_visualEffectAsset_Injected
 UnityEngine.WebCamTexture::Internal_CreateWebCamTexture_Injected
 UnityEngine.WebCamTexture::Play_Injected
+UnityEngine.WebCamTexture::GetPixels_Injected
 UnityEngine.XR.XRDevice::DisableAutoXRCameraTracking_Injected
 UnityEngine.XR.XRDisplaySubsystem::AddGraphicsThreadMirrorViewBlit_Injected
 UnityEngine.XR.XRDisplaySubsystem::GetMirrorViewBlitDesc_Injected

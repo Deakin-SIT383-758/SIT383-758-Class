@@ -7,12 +7,19 @@ public class ARCamera : MonoBehaviour
     private WebCamTexture camTexture;
     public TextMeshProUGUI debugText;
 
-    private void Start()
+    public WebCamTexture CamTexture { get => camTexture; set => camTexture = value; }
+
+    private void Awake()
     {
         debugText.text = "Starting up";
-        camTexture = new WebCamTexture();
-        mat.mainTexture = camTexture;
-        camTexture.Play();
+        CamTexture = new WebCamTexture();
+        mat.mainTexture = CamTexture;
+        CamTexture.Play();
         debugText.text = "Playing";
+    }
+
+    public Color[] GetCurrentFramePixels()
+    {
+        return CamTexture.GetPixels();
     }
 }
