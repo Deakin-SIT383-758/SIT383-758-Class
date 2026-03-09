@@ -1,0 +1,24 @@
+using UnityEngine;
+
+using UnityEngine;
+
+public class ARCamera : MonoBehaviour
+{
+    public Material cubeMaterial;
+    private WebCamTexture wcTexture;
+    
+
+    void Start() 
+    {
+        wcTexture = new WebCamTexture();
+
+        cubeMaterial.mainTexture = wcTexture;
+        wcTexture.Play();
+    }
+
+    void Update()
+    {
+        
+    }
+}
+
