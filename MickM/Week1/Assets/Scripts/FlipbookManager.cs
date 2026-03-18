@@ -21,8 +21,6 @@ public class FlipbookManager : MonoBehaviour
     private Texture2D flipbookTexture;
     public void SaveImage()
     {
-        //flipbookTexture = new Texture2D(arCamera.CamTexture.width, arCamera.CamTexture.height);
-
         var pixels = arCamera.GetCurrentFramePixels();
         savedTextures.Add(pixels);
     }
