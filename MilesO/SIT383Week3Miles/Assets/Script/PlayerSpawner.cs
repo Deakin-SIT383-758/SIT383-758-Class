@@ -1,15 +1,18 @@
 using UnityEngine;
 using Fusion;
 
-public class PlayerSpawner : SimulationBehaviour, IPlayerJoined //Function from Photon for multiplayer
+public class PlayerSpawner : SimulationBehaviour, IPlayerJoined
 {
-    public GameObject PlayerPrefab; //Prefab for the player character
+    public GameObject PlayerPrefab;
 
     public void PlayerJoined(PlayerRef player)
     {
-        if (Runner.LocalPlayer == player) //Check if the player that joined is the local player
+        // Only the host (State Authority) is allowed to spawn players
+        if (Runner.IsServer)
         {
-            Runner.Spawn(PlayerPrefab, Vector3.zero, Quaternion.identity); //Spawn the player character at the origin with no rotation
+            Runner.Spawn(PlayerPrefab, Vector3.zero, Quaternion.identity, player);
         }
+
+        Debug.Log("PlayerJoined fired for: " + player); //debug log to confirm the function is being called
     }
 }
