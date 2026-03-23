@@ -7,14 +7,13 @@ public class PlayerCameraController : NetworkBehaviour
 
     public override void Spawned()
     {
-        // Only enable the camera for the player who owns this object
+        // Enable camera only for the local player
+        Camera cam = GetComponentInChildren<Camera>();
+
         if (Object.HasInputAuthority)
-        {
-            playerCamera.enabled = true;
-        }
+            cam.enabled = true;
         else
-        {
-            playerCamera.enabled = false;
-        }
+            cam.enabled = false;
     }
+
 }

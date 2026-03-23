@@ -9,7 +9,7 @@ public class PlayerMovement : NetworkBehaviour
     public override void FixedUpdateNetwork()
     {
 
-        if (HasStateAuthority == false)
+        if (!Object.HasInputAuthority)
         {
             return;
         }
@@ -29,6 +29,10 @@ public class PlayerMovement : NetworkBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             Debug.Log("Pressed E");
+            Debug.Log("MAIN CAMERA: " + Camera.main);
+            Debug.Log("MAIN CAMERA ENABLED: " + Camera.main.enabled);
+            Debug.Log("MAIN CAMERA POSITION: " + Camera.main.transform.position);
+            Debug.Log("MAIN CAMERA FORWARD: " + Camera.main.transform.forward);
 
             if (Camera.main == null)
             {
@@ -38,7 +42,7 @@ public class PlayerMovement : NetworkBehaviour
 
             if (Physics.Raycast(Camera.main.transform.position,
                                 Camera.main.transform.forward,
-                                out RaycastHit hit, 5f))
+                                out RaycastHit hit, 20f))
             {
                 Debug.Log("Raycast hit: " + hit.collider.name);
 
@@ -56,6 +60,7 @@ public class PlayerMovement : NetworkBehaviour
             {
                 Debug.Log("Raycast hit nothing");
             }
+
         }
 
     }
