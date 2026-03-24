@@ -477,7 +477,7 @@ MonoBehaviour:
   ClientStartDelay: 0.1
   ServerPort: 0
   DefaultRoomName: 
-  InitialScenePath: Assets/Scenes/SampleScene.unity
+  InitialScenePath: 
   _currentStage: 0
   AutoConnectVirtualInstances: 1
   VirtualInstanceConnectDelay: 1
@@ -509,7 +509,6 @@ GameObject:
   - component: {fileID: 1223344875}
   - component: {fileID: 1223344878}
   - component: {fileID: 1223344879}
-  - component: {fileID: 1223344880}
   m_Layer: 0
   m_Name: Prototype Runner
   m_TagString: Untagged
@@ -638,21 +637,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8edbe7108d8a43ab838cf8b8d9453df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Fusion.Unity::Fusion.RunnerEnableVisibility
---- !u!114 &1223344880
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1223344874}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90a93abf1a391964a94e5c139605105b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Fusion.Unity::Fusion.NetworkSceneManagerDefault
-  IsSceneTakeOverEnabled: 1
-  LogSceneLoadErrors: 1
-  DestroySpawnedPrefabsOnSceneUnload: 1
 --- !u!1001 &4832806187114653150
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -671,7 +655,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1802507373951202691, guid: 524b4635d77c9bf40ab91d76601c04d5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2
+      value: 1.56
       objectReference: {fileID: 0}
     - target: {fileID: 1802507373951202691, guid: 524b4635d77c9bf40ab91d76601c04d5, type: 3}
       propertyPath: m_LocalPosition.z
@@ -704,10 +688,6 @@ PrefabInstance:
     - target: {fileID: 1802507373951202691, guid: 524b4635d77c9bf40ab91d76601c04d5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3620759383250147280, guid: 524b4635d77c9bf40ab91d76601c04d5, type: 3}
-      propertyPath: Flags
-      value: 524289
       objectReference: {fileID: 0}
     - target: {fileID: 3620759383250147280, guid: 524b4635d77c9bf40ab91d76601c04d5, type: 3}
       propertyPath: SortKey

@@ -33,6 +33,8 @@ public class PlayerMovement : NetworkBehaviour
             Debug.Log("MAIN CAMERA ENABLED: " + Camera.main.enabled);
             Debug.Log("MAIN CAMERA POSITION: " + Camera.main.transform.position);
             Debug.Log("MAIN CAMERA FORWARD: " + Camera.main.transform.forward);
+            Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * 20f, Color.red, 1f);
+            Debug.Log("Raycast from " + Camera.main.transform.position + " in direction " + Camera.main.transform.forward);
 
             if (Camera.main == null)
             {
