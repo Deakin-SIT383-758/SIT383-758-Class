@@ -6,64 +6,89 @@ public class PlayerMovement : NetworkBehaviour
     [SerializeField] private CharacterController ch;
     public float playerSpeed = 5f;
 
+    [Header("Camera")]
+    public Camera playerCamera;
+
+    [Header("Visual")]
+    public Renderer playerRenderer;
+
+    [Header("Interaction")]
+    public GameObject objectPrefab;
+
+    //NETWORKED VARIABLE (synced across all clients)
+    [Networked] public Color PlayerColor { get; set; }
+
+    private float lastSpawnTime;
+
+    public override void Spawned()
+    {
+        // Enable camera only for local player
+        if (playerCamera != null)
+            playerCamera.enabled = Object.HasInputAuthority;
+
+        // Assign colour ONLY on server
+        if (Object.HasStateAuthority)
+        {
+            PlayerColor = new Color(
+                Random.value,
+                Random.value,
+                Random.value
+            );
+        }
+    }
+
     public override void FixedUpdateNetwork()
     {
+        if (!Object.HasInputAuthority) return;
 
-        if (!Object.HasInputAuthority)
+        // Only process if we have valid network input
+        if (GetInput(out PlayerInputData input))
         {
-            return;
-        }
+            Vector3 movement = new Vector3(input.horizontal, 0, input.vertical) * playerSpeed * Runner.DeltaTime;
 
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
+            // Move using CharacterController
+            ch.Move(movement);
 
-        Vector3 movement = new Vector3(horizontalInput, 0, verticalInput) * playerSpeed * Runner.DeltaTime;
-
-        ch.Move(movement);
-
-        if (movement != Vector3.zero)
-        {
-            transform.forward = movement;
-        }
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            Debug.Log("Pressed E");
-            Debug.Log("MAIN CAMERA: " + Camera.main);
-            Debug.Log("MAIN CAMERA ENABLED: " + Camera.main.enabled);
-            Debug.Log("MAIN CAMERA POSITION: " + Camera.main.transform.position);
-            Debug.Log("MAIN CAMERA FORWARD: " + Camera.main.transform.forward);
-            Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * 20f, Color.red, 1f);
-            Debug.Log("Raycast from " + Camera.main.transform.position + " in direction " + Camera.main.transform.forward);
-
-            if (Camera.main == null)
+            // Rotate toward movement direction
+            if (movement != Vector3.zero)
             {
-                Debug.Log("No main camera!");
-                return;
+                transform.forward = movement;
             }
 
-            if (Physics.Raycast(Camera.main.transform.position,
-                                Camera.main.transform.forward,
-                                out RaycastHit hit, 20f))
+            // Spawn shared object
+            if (input.spawn && Object.HasInputAuthority)
             {
-                Debug.Log("Raycast hit: " + hit.collider.name);
-
-                if (hit.collider.TryGetComponent(out SharedCube cube))
-                {
-                    Debug.Log("Found SharedCube script, calling RPC");
-                    cube.RPC_ChangeColor();
-                }
-                else
-                {
-                    Debug.Log("Hit object has NO SharedCube script");
-                }
-            }
-            else
-            {
-                Debug.Log("Raycast hit nothing");
+                RPC_SpawnObject();
             }
 
+            if (input.spawn && Runner.DeltaTime - lastSpawnTime > 0.5f)
+            {
+                lastSpawnTime = Runner.DeltaTime;
+                RPC_SpawnObject();
+            }
+
+                Debug.Log("Input received");
+
+            Debug.Log(Object.HasInputAuthority);
         }
+    }
 
+    public override void Render()
+    {
+        //Apply synced colour every frame
+        if (playerRenderer != null)
+        {
+            playerRenderer.material.color = PlayerColor;
+        }
+    }
+
+    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+    void RPC_SpawnObject()
+    {
+        if (objectPrefab == null) return;
+
+        Vector3 spawnPos = transform.position + transform.forward + Vector3.up;
+
+        Runner.Spawn(objectPrefab, spawnPos, Quaternion.identity);
     }
 }
