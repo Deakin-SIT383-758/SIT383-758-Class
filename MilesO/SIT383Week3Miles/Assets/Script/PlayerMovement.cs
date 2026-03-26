@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using Fusion;
 
 public class PlayerMovement : NetworkBehaviour
@@ -19,6 +19,8 @@ public class PlayerMovement : NetworkBehaviour
     [Networked] public Color PlayerColor { get; set; }
 
     private float lastSpawnTime;
+
+    public bool spawnPressed;
 
     public override void Spawned()
     {
@@ -41,35 +43,24 @@ public class PlayerMovement : NetworkBehaviour
     {
         if (!Object.HasInputAuthority) return;
 
-        // Only process if we have valid network input
         if (GetInput(out PlayerInputData input))
         {
-            Vector3 movement = new Vector3(input.horizontal, 0, input.vertical) * playerSpeed * Runner.DeltaTime;
+            Vector3 movement = new Vector3(input.horizontal, 0, input.vertical)
+                    * playerSpeed * Runner.DeltaTime;
 
-            // Move using CharacterController
-            ch.Move(movement);
+            // ✅ Direct transform movement (network-friendly)
+            transform.position += movement;
 
-            // Rotate toward movement direction
             if (movement != Vector3.zero)
             {
                 transform.forward = movement;
             }
 
-            // Spawn shared object
-            if (input.spawn && Object.HasInputAuthority)
+            // ✅ FIX: Only trigger on button press (not hold)
+            if (input.spawnPressed)
             {
                 RPC_SpawnObject();
             }
-
-            if (input.spawn && Runner.DeltaTime - lastSpawnTime > 0.5f)
-            {
-                lastSpawnTime = Runner.DeltaTime;
-                RPC_SpawnObject();
-            }
-
-                Debug.Log("Input received");
-
-            Debug.Log(Object.HasInputAuthority);
         }
     }
 
@@ -83,10 +74,8 @@ public class PlayerMovement : NetworkBehaviour
     }
 
     [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
-    void RPC_SpawnObject()
+    void RPC_SpawnObject(RpcInfo info = default)
     {
-        if (objectPrefab == null) return;
-
         Vector3 spawnPos = transform.position + transform.forward + Vector3.up;
 
         Runner.Spawn(objectPrefab, spawnPos, Quaternion.identity);
