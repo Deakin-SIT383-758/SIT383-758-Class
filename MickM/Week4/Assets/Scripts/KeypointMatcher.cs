@@ -19,7 +19,7 @@ public class KeypointMatcher : MonoBehaviour
         handDetection = GetComponent<HandDetection>();
         savedJointPositions = new List<Vector3[]>();
 
-        SimilarityMatchingFunction = GetRotationInvariantPoseSimilarity;//SumSquareDistances;
+        SetSimilarityMatchingFunction(SumSquareDistances);
     }
 
     private bool recordPositionsFlag = false;
@@ -29,6 +29,20 @@ public class KeypointMatcher : MonoBehaviour
         {
             recordPositionsFlag = true;
         }
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            SetSimilarityMatchingFunction(SumSquareDistances);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            SetSimilarityMatchingFunction(GetRotationInvariantPoseSimilarity);
+        }
+    }
+
+    public void SetSimilarityMatchingFunction(System.Func<Vector3[], Vector3[], float> matchingFunction)
+    {
+        SimilarityMatchingFunction = matchingFunction;
+        Debug.Log(matchingFunction.Method.Name);
     }
 
     bool isPinching = false;
@@ -124,7 +138,7 @@ public class KeypointMatcher : MonoBehaviour
     void OnGUI()
     {
         string s = isPinching ? "Pinching" : "Not pinching";
-        s += "\n";
+        s += $"\nMatching function: {GetMatchingFunctionName()}\n";
         if (closestIndexMatch < 0)
         {
             s += "No matching pose found";
@@ -154,7 +168,10 @@ public class KeypointMatcher : MonoBehaviour
         isPinching = (normalisedFingertipDistance < pinchThreshold);
     }
 
-
+    public string GetMatchingFunctionName()
+    {
+        return $"{SimilarityMatchingFunction.Method.DeclaringType.Name}.{SimilarityMatchingFunction.Method.Name}";
+    }
 
     private void OnEnable()
     {
