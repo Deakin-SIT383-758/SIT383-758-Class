@@ -13,6 +13,7 @@ public class HandDetection : MonoBehaviour
     public TextAsset anchorsCSV;
 
     public float scoreThreshold = 0.5f;
+    public float pinchThreshold = 0.12f;
 
     public int cam = 0; //index of camera to use
 
@@ -138,12 +139,28 @@ public class HandDetection : MonoBehaviour
         var landmarksAwaitable = (m_HandLandmarkerWorker.PeekOutput("Identity") as Tensor<float>).ReadbackAndCloneAsync();
         using var landmarks = await landmarksAwaitable;
 
+        Vector3[] jointPositions = new Vector3[k_NumKeypoints];
+
         for (var i = 0; i < k_NumKeypoints; i++)
         {
             var position_ImageSpace = BlazeUtils.mul(M2, new float2(landmarks[3 * i + 0], landmarks[3 * i + 1]));
 
             Vector3 position_WorldSpace = ImageToWorld(position_ImageSpace) + new Vector3(0, 0, landmarks[3 * i + 2] / m_TextureHeight);
             handPreview.SetKeypoint(i, true, position_WorldSpace);
+
+            jointPositions[i] = position_WorldSpace;
+        }
+
+        Vector3 wrist = jointPositions[0];
+        Vector3 thumbTip = jointPositions[4];
+        Vector3 indexTip = jointPositions[8];
+
+        float normalizedFTDistance = (indexTip - thumbTip).magnitude / (thumbTip - wrist).magnitude;
+
+        Debug.Log("Tip Distance: " + normalizedFTDistance);
+        if (normalizedFTDistance < pinchThreshold)
+        {
+            Debug.Log("Pinch gesture detected");
         }
     }
 
