@@ -31,6 +31,9 @@ public class HandDetection : MonoBehaviour
     float m_TextureWidth;
     float m_TextureHeight;
 
+    //Additions
+    public event System.Action<Vector3[]> FrameDetectionCompleteEvent;
+
     public async void Start()
     {
         m_Anchors = BlazeUtils.LoadAnchors(anchorsCSV.text, k_NumAnchors);
@@ -136,7 +139,6 @@ public class HandDetection : MonoBehaviour
         using var landmarks = await landmarksAwaitable;
 
         Vector3[] jointPositions = new Vector3[k_NumKeypoints];
-
         for (var i = 0; i < k_NumKeypoints; i++)
         {
             var position_ImageSpace = BlazeUtils.mul(M2, new float2(landmarks[3 * i + 0], landmarks[3 * i + 1]));
@@ -147,16 +149,7 @@ public class HandDetection : MonoBehaviour
             jointPositions[i] = position_WorldSpace;
         }
 
-        Vector3 wrist = jointPositions[0];
-        Vector3 thumbTip = jointPositions[4];
-        Vector3 indexTip = jointPositions[8];
-
-        float normalisedFingertipDistance = (indexTip - thumbTip).magnitude / (thumbTip - wrist).magnitude;
-
-        if (normalisedFingertipDistance < pinchThreshold)
-        {
-            Debug.Log("PINCH DETECTED");        
-        }
+        FrameDetectionCompleteEvent?.Invoke(jointPositions);
     }
 
     void OnDestroy()
