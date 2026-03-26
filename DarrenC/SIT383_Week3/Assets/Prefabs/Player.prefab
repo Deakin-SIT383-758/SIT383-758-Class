@@ -211,7 +211,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCustomisation
   meshRenderer: {fileID: 3305920172343398894}
   nameTag: {fileID: 7603893634903402743}
-  _NetworkedColor: {r: 1, g: 0, b: 0, a: 1}
+  _networkedColor: {r: 0, g: 0, b: 0, a: 0}
+  _networkedName: 
 --- !u!1 &7356496035681800036
 GameObject:
   m_ObjectHideFlags: 0
@@ -223,6 +224,7 @@ GameObject:
   - component: {fileID: 1241976098182302159}
   - component: {fileID: 995994597058235454}
   - component: {fileID: 7603893634903402743}
+  - component: {fileID: 3802035353705315127}
   m_Layer: 0
   m_Name: PlayerName
   m_TagString: Untagged
@@ -393,3 +395,15 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 995994597058235454}
   m_maskType: 0
+--- !u!114 &3802035353705315127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7356496035681800036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7acc50cc72e9e24bb9afbb79969477d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FaceCamera
