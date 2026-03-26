@@ -14,6 +14,9 @@ public class CustomisationUIScript : NetworkBehaviour
     private PlayerCustomisation custom;
 
     [SerializeField] private TMP_InputField nameField;
+    [SerializeField] private Slider redSlider;
+    [SerializeField] private Slider greenSlider;
+    [SerializeField] private Slider blueSlider;
 
     public void GetPlayer()
     {
@@ -27,9 +30,20 @@ public class CustomisationUIScript : NetworkBehaviour
             }
         }
     }
+
+    public Color GetSlidersColour()
+    {
+        Debug.Log("Red slider value: " + redSlider.value);
+        Debug.Log("Green slider value: " + greenSlider.value);
+        Debug.Log("Blue slider value: " + blueSlider.value);
+        Color newColour = new Color(redSlider.value, greenSlider.value, blueSlider.value);
+        return newColour;
+    }
+
     public void Submit()
     {
         GetPlayer();
         custom.ChangeName(nameField.text);
+        custom.ChangeColor(GetSlidersColour());
     }
 }

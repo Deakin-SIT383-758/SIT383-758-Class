@@ -38,10 +38,10 @@ public class PlayerCustomisation : NetworkBehaviour
 
     public override void Spawned()
     {
-        if (Object.HasStateAuthority)
-        {
-            ChangeColor(Color.red);
-        }
+        // if (Object.HasStateAuthority)
+        // {
+        //     ChangeColor(Color.red);
+        // }
         ColorChanged();
         NameChanged();
     }
