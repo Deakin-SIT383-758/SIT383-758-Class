@@ -121,7 +121,7 @@ public class KeypointMatcher : MonoBehaviour
         return totalError;
     }
 
-    private Quaternion GetHandRotation(Vector3[] joints)
+    public Quaternion GetHandRotation(Vector3[] joints)
     {
         //Define rotations based on Forward, Right and Up
         //Forward: Wrist (0) to base of middle finger (mcp) (9)

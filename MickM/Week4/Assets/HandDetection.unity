@@ -335,6 +335,7 @@ GameObject:
   - component: {fileID: 1368681184}
   - component: {fileID: 1368681185}
   - component: {fileID: 1368681186}
+  - component: {fileID: 1368681187}
   m_Layer: 0
   m_Name: Hand Detection
   m_TagString: Untagged
@@ -391,6 +392,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::KeypointMatcher
   checkPinch: 1
   pinchThreshold: 0.15
+  detectionThreshold: 0.1
+--- !u!114 &1368681187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1368681182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b1303c55b5145e4c86e1081aaf547f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GeminiOptimisedMatching
 --- !u!1 &1685754521
 GameObject:
   m_ObjectHideFlags: 0
