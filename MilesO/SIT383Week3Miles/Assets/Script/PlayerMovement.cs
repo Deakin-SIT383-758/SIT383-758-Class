@@ -41,26 +41,23 @@ public class PlayerMovement : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
-        if (!Object.HasInputAuthority) return;
+        if (!GetInput(out PlayerInputData input)) return;
 
-        if (GetInput(out PlayerInputData input))
+        // ✅ Movement is now processed on BOTH client + server
+        Vector3 movement = new Vector3(input.horizontal, 0, input.vertical)
+                            * playerSpeed * Runner.DeltaTime;
+
+        transform.position += movement;
+
+        if (movement != Vector3.zero)
         {
-            Vector3 movement = new Vector3(input.horizontal, 0, input.vertical)
-                    * playerSpeed * Runner.DeltaTime;
+            transform.forward = movement;
+        }
 
-            // ✅ Direct transform movement (network-friendly)
-            transform.position += movement;
-
-            if (movement != Vector3.zero)
-            {
-                transform.forward = movement;
-            }
-
-            // ✅ FIX: Only trigger on button press (not hold)
-            if (input.spawnPressed)
-            {
-                RPC_SpawnObject();
-            }
+        // ✅ Only input authority triggers actions
+        if (Object.HasInputAuthority && input.spawnPressed)
+        {
+            RPC_SpawnObject();
         }
     }
 
