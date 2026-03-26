@@ -19,7 +19,7 @@ public class KeypointMatcher : MonoBehaviour
         handDetection = GetComponent<HandDetection>();
         savedJointPositions = new List<Vector3[]>();
 
-        SimilarityMatchingFunction = SumSquareDistances;
+        SimilarityMatchingFunction = GetRotationInvariantPoseSimilarity;//SumSquareDistances;
     }
 
     private bool recordPositionsFlag = false;
@@ -67,6 +67,7 @@ public class KeypointMatcher : MonoBehaviour
         return bestIndex;
     }
 
+    #region Pose Detection Methods
     float SumSquareDistances(Vector3[] a,  Vector3[] b)
     {
         float totalDistance = 0;
@@ -79,6 +80,46 @@ public class KeypointMatcher : MonoBehaviour
         return totalDistance;
     }
 
+
+    //To get rotation invariant pose similarity we need to:
+    //1. Determine the rotation of each set of points
+    //2. Get the vector from the wrist to each point in each hand pose
+    //3. Translate that into local space through inverse quartenion
+    //4. Take the dot product; match is 1 so add (1-dot product) to error
+    public float GetRotationInvariantPoseSimilarity(Vector3[] current, Vector3[] saved)
+    {
+        Quaternion currentRot = GetHandRotation(current);
+        Quaternion savedRot = GetHandRotation(saved);
+
+        float totalError = 0;
+
+        for (int i = 1; i < current.Length; i++)
+        {
+            Vector3 currentVec = (current[i] - current[0]).normalized;
+            Vector3 savedVec = (saved[i] - saved[0]).normalized;
+
+            Vector3 localCur = Quaternion.Inverse(currentRot) * currentVec;
+            Vector3 localSav = Quaternion.Inverse(savedRot) * savedVec;
+
+            totalError += (1 - Vector3.Dot(localCur, localSav));
+        }
+
+        return totalError;
+    }
+
+    private Quaternion GetHandRotation(Vector3[] joints)
+    {
+        //Define rotations based on Forward, Right and Up
+        //Forward: Wrist (0) to base of middle finger (mcp) (9)
+        //Right: Base of index (5) to base of pinky (17)
+        //Up: Cross product of Forward and Right
+        Vector3 forward = (joints[9] - joints[0]).normalized;
+        Vector3 right = (joints[17] - joints[5]).normalized;
+        Vector3 up = Vector3.Cross(forward, right);
+
+        return Quaternion.LookRotation(forward, up);
+    }
+    #endregion
 
     void OnGUI()
     {
