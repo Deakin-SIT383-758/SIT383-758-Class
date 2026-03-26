@@ -18,6 +18,17 @@ public class CustomisationUIScript : NetworkBehaviour
     [SerializeField] private Slider greenSlider;
     [SerializeField] private Slider blueSlider;
 
+
+    void Start()
+    {
+        transform.root.gameObject.SetActive(false); // hide UI to start
+    }
+
+    public void PlayerJoined()
+    {
+        transform.root.gameObject.SetActive(true); // display UI on joining
+    }
+
     public void GetPlayer()
     {
         foreach (PlayerMovement pm in FindObjectsByType<PlayerMovement>(FindObjectsSortMode.None)) // iterate through all player prefabs
@@ -45,5 +56,6 @@ public class CustomisationUIScript : NetworkBehaviour
         GetPlayer();
         custom.ChangeName(nameField.text);
         custom.ChangeColor(GetSlidersColour());
+        transform.root.gameObject.SetActive(false); // hide UI after submission
     }
 }
