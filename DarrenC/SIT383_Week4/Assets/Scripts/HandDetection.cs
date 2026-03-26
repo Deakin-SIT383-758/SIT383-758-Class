@@ -14,6 +14,8 @@ public class HandDetection : MonoBehaviour
 
     public float scoreThreshold = 0.5f;
 
+    public int cam = 0; //index of camera to use
+
     const int k_NumAnchors = 2016;
     float[,] m_Anchors;
 
@@ -53,11 +55,15 @@ public class HandDetection : MonoBehaviour
         m_DetectorInput = new Tensor<float>(new TensorShape(1, detectorInputSize, detectorInputSize, 3));
         m_LandmarkerInput = new Tensor<float>(new TensorShape(1, landmarkerInputSize, landmarkerInputSize, 3));
 
+        WebCamTexture wc = new WebCamTexture(WebCamTexture.devices[cam].name);
+        wc.Play();
+        Debug.Log("Webcam device: " + wc.deviceName);
+
         while (true)
         {
             try
             {
-                m_DetectAwaitable = Detect(imageTexture);
+                m_DetectAwaitable = Detect(wc);
                 await m_DetectAwaitable;
             }
             catch (OperationCanceledException)
