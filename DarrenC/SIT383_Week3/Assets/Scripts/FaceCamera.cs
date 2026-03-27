@@ -11,7 +11,7 @@ public class FaceCamera : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         transform.rotation = camTrans.rotation; // match camera rotation
     }
