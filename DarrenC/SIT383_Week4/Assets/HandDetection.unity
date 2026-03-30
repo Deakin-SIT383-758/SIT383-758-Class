@@ -376,7 +376,10 @@ MonoBehaviour:
   anchorsCSV: {fileID: 4900000, guid: 3e88456b82cc63d4b9237f1dc38bad6d, type: 3}
   scoreThreshold: 0.5
   pinchThreshold: 0.3
-  cam: 2
+  dotPrefab: {fileID: 477303915706283651, guid: c0b06c42d2146674b89ee4f95a35a1fa, type: 3}
+  minDrawDistance: 0.01
+  lastIndexPos: {x: 0, y: 0, z: 0}
+  cam: 0
 --- !u!1 &1685754521
 GameObject:
   m_ObjectHideFlags: 0

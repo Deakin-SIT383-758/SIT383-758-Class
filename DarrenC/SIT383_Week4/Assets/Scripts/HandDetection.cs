@@ -14,6 +14,9 @@ public class HandDetection : MonoBehaviour
 
     public float scoreThreshold = 0.5f;
     public float pinchThreshold = 0.12f;
+    public GameObject dotPrefab;
+    public float minDrawDistance = 0.01f; // minimum distance moved to draw another dot
+    public Vector3 lastIndexPos = Vector3.zero; // position of Index finger tip on last dot placement
 
     public int cam = 0; //index of camera to use
 
@@ -161,6 +164,11 @@ public class HandDetection : MonoBehaviour
         if (normalizedFTDistance < pinchThreshold)
         {
             Debug.Log("Pinch gesture detected");
+            if (Vector3.Distance(indexTip, lastIndexPos) > minDrawDistance)
+            {
+                GameObject.Instantiate(dotPrefab, indexTip, Quaternion.identity);
+                lastIndexPos = indexTip;
+            }
         }
     }
 
