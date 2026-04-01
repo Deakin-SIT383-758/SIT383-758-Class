@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using Fusion;
 
 public class PlayerMovement : NetworkBehaviour
@@ -20,6 +20,8 @@ public class PlayerMovement : NetworkBehaviour
 
     private float lastSpawnTime;
 
+    public bool spawnPressed;
+
     public override void Spawned()
     {
         // Enable camera only for local player
@@ -39,37 +41,23 @@ public class PlayerMovement : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
-        if (!Object.HasInputAuthority) return;
+        if (!GetInput(out PlayerInputData input)) return;
 
-        // Only process if we have valid network input
-        if (GetInput(out PlayerInputData input))
+        // ✅ Movement is now processed on BOTH client + server
+        Vector3 movement = new Vector3(input.horizontal, 0, input.vertical)
+                            * playerSpeed * Runner.DeltaTime;
+
+        transform.position += movement;
+
+        if (movement != Vector3.zero)
         {
-            Vector3 movement = new Vector3(input.horizontal, 0, input.vertical) * playerSpeed * Runner.DeltaTime;
+            transform.forward = movement;
+        }
 
-            // Move using CharacterController
-            ch.Move(movement);
-
-            // Rotate toward movement direction
-            if (movement != Vector3.zero)
-            {
-                transform.forward = movement;
-            }
-
-            // Spawn shared object
-            if (input.spawn && Object.HasInputAuthority)
-            {
-                RPC_SpawnObject();
-            }
-
-            if (input.spawn && Runner.DeltaTime - lastSpawnTime > 0.5f)
-            {
-                lastSpawnTime = Runner.DeltaTime;
-                RPC_SpawnObject();
-            }
-
-                Debug.Log("Input received");
-
-            Debug.Log(Object.HasInputAuthority);
+        // ✅ Only input authority triggers actions
+        if (Object.HasInputAuthority && input.spawnPressed)
+        {
+            RPC_SpawnObject();
         }
     }
 
@@ -83,10 +71,8 @@ public class PlayerMovement : NetworkBehaviour
     }
 
     [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
-    void RPC_SpawnObject()
+    void RPC_SpawnObject(RpcInfo info = default)
     {
-        if (objectPrefab == null) return;
-
         Vector3 spawnPos = transform.position + transform.forward + Vector3.up;
 
         Runner.Spawn(objectPrefab, spawnPos, Quaternion.identity);
