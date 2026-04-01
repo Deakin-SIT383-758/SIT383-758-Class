@@ -14,7 +14,6 @@ public class PlayerMovement : NetworkBehaviour
     private bool isGrounded;
     private bool jumpRequested;
 
-
     public override void FixedUpdateNetwork()
     {
         if(HasStateAuthority == false)
