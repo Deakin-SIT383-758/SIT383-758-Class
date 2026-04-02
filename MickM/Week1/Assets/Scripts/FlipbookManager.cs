@@ -17,7 +17,7 @@ public class FlipbookManager : MonoBehaviour
         flipbookTexture = new Texture2D(arCamera.CamTexture.width, arCamera.CamTexture.height);
 
     }
-    public Material testMat;
+    public Material imageDisplayMat;
     private Texture2D flipbookTexture;
     public void SaveImage()
     {
@@ -52,6 +52,6 @@ public class FlipbookManager : MonoBehaviour
 
         flipbookTexture.SetPixels(savedTextures[currentIndex]);
         flipbookTexture.Apply();
-        testMat.mainTexture = flipbookTexture;
+        imageDisplayMat.mainTexture = flipbookTexture;
     }
 }
