@@ -12,7 +12,7 @@ public class FusionInputHandler : MonoBehaviour, INetworkRunnerCallbacks
 
         data.horizontal = Input.GetAxis("Horizontal");
         data.vertical = Input.GetAxis("Vertical");
-        data.spawn = Input.GetKey(KeyCode.Space);
+        data.spawnPressed = Input.GetKeyDown(KeyCode.Space);
 
         input.Set(data);
     }

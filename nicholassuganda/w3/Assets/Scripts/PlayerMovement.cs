@@ -6,6 +6,13 @@ public class PlayerMovement : NetworkBehaviour
     [SerializeField] private CharacterController ch;
     public float playerSpeed = 5f;
 
+    [SerializeField] private float jumpHeight = 1.5f;
+    [SerializeField] private float gravity = -9.81f;
+    [SerializeField] private float groundCheckRadius = 0.3f;
+    [SerializeField] private LayerMask groundLayer = -1;
+    private Vector3 velocity;
+    private bool isGrounded;
+    private bool jumpRequested;
 
     public override void FixedUpdateNetwork()
     {
@@ -14,14 +21,35 @@ public class PlayerMovement : NetworkBehaviour
             return;
         }
 
+        Vector3 feetPosition = transform.position + Vector3.down * (ch.height * 0.5f);
+        isGrounded = Physics.CheckSphere(feetPosition, groundCheckRadius, groundLayer);
+        
+        if (isGrounded && velocity.y < 0)
+        {
+            velocity.y = -2f;
+        }
+
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
         Vector3 movement = new Vector3(horizontalInput, 0, verticalInput) * playerSpeed * Runner.DeltaTime;
-
         ch.Move(movement);
 
-        if(movement!= Vector3.zero)
+        if (Input.GetButtonDown("Jump") && isGrounded)
+        {
+            jumpRequested = true;
+        }
+        
+        if (jumpRequested && isGrounded)
+        {
+            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            jumpRequested = false;
+        }
+
+        velocity.y += gravity * Runner.DeltaTime;
+        ch.Move(velocity * Runner.DeltaTime);
+
+        if(movement != Vector3.zero)
         {
             transform.forward = movement;
         }

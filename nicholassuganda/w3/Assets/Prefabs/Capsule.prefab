@@ -165,6 +165,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ch: {fileID: -7835101982087941874}
   playerSpeed: 5
+  jumpHeight: 1.5
+  gravity: -9.81
+  groundCheckRadius: 0.5
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 1
 --- !u!143 &-7835101982087941874
 CharacterController:
   m_ObjectHideFlags: 0
