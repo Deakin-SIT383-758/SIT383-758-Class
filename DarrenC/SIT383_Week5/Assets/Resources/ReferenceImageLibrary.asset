@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 848409ee8ba454f42a5ddff137688a27, type: 3}
+  m_Name: ReferenceImageLibrary
+  m_EditorClassIdentifier: Unity.XR.ARSubsystems::UnityEngine.XR.ARSubsystems.XRReferenceImageLibrary
+  m_GuidLow: 4977747847308806464
+  m_GuidHigh: 10247235473983214726
+  m_DataStore:
+    m_Storage: []
+  m_Images:
+  - m_SerializedGuid:
+      m_GuidLow: 4650966481059083348
+      m_GuidHigh: 11737339478161914553
+    m_SerializedTextureGuid:
+      m_GuidLow: 12674329577267496132
+      m_GuidHigh: 16818622880294991818
+    m_Size: {x: 0.1, y: 0.1}
+    m_SpecifySize: 1
+    m_Name: irsyad15-ellipse-6512786_1920
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5732524041712411836
+      m_GuidHigh: 16113763389937395598
+    m_SerializedTextureGuid:
+      m_GuidLow: 18380484437114992984
+      m_GuidHigh: 13861999216333581384
+    m_Size: {x: 0.1, y: 0.1}
+    m_SpecifySize: 1
+    m_Name: yayangart-flowers-8564948_1920
+    m_Texture: {fileID: 0}

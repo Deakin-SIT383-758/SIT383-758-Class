@@ -58,4 +58,5 @@
   <Project Path="UnityEngine.XR.LegacyInputHelpers.csproj" />
   <Project Path="Unity.PlasticSCM.Editor.Entities.csproj" />
   <Project Path="UnityEditor.SpatialTracking.csproj" />
+  <Project Path="Assembly-CSharp.csproj" />
 </Solution>
