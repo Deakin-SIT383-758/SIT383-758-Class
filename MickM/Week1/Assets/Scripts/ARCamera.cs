@@ -6,17 +6,19 @@ public class ARCamera : MonoBehaviour
 {
     public Material mat;
     private WebCamTexture camTexture;
-    public TextMeshProUGUI debugText;
 
     public WebCamTexture CamTexture { get => camTexture; set => camTexture = value; }
 
+    private string statusString;
+    public string StatusString { get => statusString; }
+
     private void Awake()
     {
-        debugText.text = "Starting up";
+        statusString = "Starting up";
         CamTexture = new WebCamTexture();
         mat.mainTexture = CamTexture;
         CamTexture.Play();
-        debugText.text = "Playing";
+        statusString = "Playing";
 
         Input.compass.enabled = true;
         Input.gyro.enabled = true;
@@ -32,7 +34,7 @@ public class ARCamera : MonoBehaviour
     {
         if (!Input.location.isEnabledByUser)
         {
-            debugText.text = "GPS not enabled by user";
+            statusString = "GPS not enabled by user";
         }
         else
         {
@@ -40,13 +42,18 @@ public class ARCamera : MonoBehaviour
         }
     }
 
+    private Vector3 currentGps = Vector3.zero;
+    public Vector3 CurrentGps { get => currentGps;}
+    public Vector2 GPSAccuracy { get => new Vector2(Input.location.lastData.horizontalAccuracy, Input.location.lastData.verticalAccuracy); }
+
+
     private void Update()
     {
         float azimuth = Input.compass.trueHeading;
         Vector3 boresight = transform.forward;
         float pitch = Mathf.Asin(boresight.y) * Mathf.Rad2Deg;
 
-        Vector3 currentGps = Vector3.zero;
+        
         if (Input.location.status == LocationServiceStatus.Running)
         {
             currentGps = new Vector3(
@@ -58,13 +65,13 @@ public class ARCamera : MonoBehaviour
             float horizontalAccuracy = Input.location.lastData.horizontalAccuracy;
             float verticalAccuracy = Input.location.lastData.verticalAccuracy;
 
-            debugText.text = $"Loc: {currentGps} (Horiz acc:{horizontalAccuracy}, Vert acc:{verticalAccuracy})\nAz:{azimuth}, pitch:{pitch}";
+            statusString = $"Loc: {CurrentGps}\n(Horiz acc:{horizontalAccuracy}, Vert acc:{verticalAccuracy})\nAz:{azimuth}, pitch:{pitch}";
         } else
         {
             if (!Input.location.isEnabledByUser)
-                debugText.text = "GPS not enabled by user\nAz:{azimuth}, pitch:{pitch}";
+                statusString = "GPS not enabled by user\nAz:{azimuth}, pitch:{pitch}";
             else
-                debugText.text = $"Location service status:\n{Input.location.status}\nAz:{azimuth}, pitch:{pitch}";
+                statusString = $"Location service status:\n{Input.location.status}\nAz:{azimuth}, pitch:{pitch}";
         }
     }
 
