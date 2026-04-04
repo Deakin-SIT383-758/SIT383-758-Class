@@ -37,6 +37,8 @@ public class KeypointMatcher : MonoBehaviour
         {
             SetSimilarityMatchingFunction(GetRotationInvariantPoseSimilarity);
         }
+
+        showVisuals = Input.GetKey(KeyCode.LeftShift);
     }
 
     public void SetSimilarityMatchingFunction(System.Func<Vector3[], Vector3[], float> matchingFunction)
@@ -59,6 +61,11 @@ public class KeypointMatcher : MonoBehaviour
             isPinching = false;
 
         closestIndexMatch = GetNearestIndex(jointPositions);
+
+
+        Quaternion currentRot = GetHandRotation(jointPositions);
+        Vector3 currentPos = jointPositions[0] + 0.5f * (jointPositions[9] - jointPositions[0]);
+        UpdateHandPlaneVisuals(currentPos, currentRot);
     }
 
     public float detectionThreshold = 0.1f;
@@ -68,6 +75,7 @@ public class KeypointMatcher : MonoBehaviour
 
         float bestSimilarity = 999;
         int bestIndex = -1;
+
         for (int i = 0; i < savedJointPositions.Count; i++)
         {
             float indexScore = SimilarityMatchingFunction(jointPositions, savedJointPositions[i]);
@@ -135,6 +143,17 @@ public class KeypointMatcher : MonoBehaviour
     }
     #endregion
 
+    public Transform handPlaneVisuals;
+    public bool showVisuals = false;
+    void UpdateHandPlaneVisuals(Vector3 pos, Quaternion rot)
+    {
+        if (handPlaneVisuals == null) return;
+        handPlaneVisuals.gameObject.SetActive(showVisuals);
+        if (showVisuals == false) return;
+
+        handPlaneVisuals.transform.position = pos;
+        handPlaneVisuals.rotation = rot;
+    }
     void OnGUI()
     {
         string s = isPinching ? "Pinching" : "Not pinching";
@@ -146,7 +165,7 @@ public class KeypointMatcher : MonoBehaviour
         {
             s += $"Matching pose index: {closestIndexMatch} ({closestIndexScore})";
         }
-        GUI.Label(new Rect(10, 10, 300, 200), s);
+        GUI.Label(new Rect(10, 10, 600, 200), s);
 
     }
     private void RecordPositions(Vector3[] jointPositions)
