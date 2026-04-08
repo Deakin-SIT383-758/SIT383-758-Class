@@ -12,7 +12,7 @@ public class ARCamera : MonoBehaviour
 
     void Start()
     {
-        // 📱 Enable gyroscope
+        // Enable gyroscope
         if (SystemInfo.supportsGyroscope)
         {
             Input.gyro.enabled = true;
@@ -22,7 +22,7 @@ public class ARCamera : MonoBehaviour
             infoText.text = "Gyroscope not supported";
         }
 
-        // 🎥 Start camera
+        // Start camera
         if (WebCamTexture.devices.Length == 0)
         {
             infoText.text = "No camera found";
