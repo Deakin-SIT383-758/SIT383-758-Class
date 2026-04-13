@@ -2,12 +2,14 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.XR.ARFoundation;
 using System;
+using TMPro;
 
 public class ARMarkerTracker : MonoBehaviour
 {
     public List<GameObject> ObjectsToPlace;
     Dictionary<string, GameObject> trackedObjects;
     ARTrackedImageManager arTrackedManager;
+    public TextMeshProUGUI debug;
 
     void Awake()
     {
@@ -29,6 +31,7 @@ public class ARMarkerTracker : MonoBehaviour
         foreach(var addedImage in args.added)
         {
             trackedObjects[addedImage.referenceImage.name].SetActive(true);
+            debug.text += "Added Image";
         }
 
         foreach (var updatedImage in args.updated)
@@ -37,11 +40,13 @@ public class ARMarkerTracker : MonoBehaviour
 
             trackedObjects[updatedImage.referenceImage.name].transform.position = updatedImage.transform.position;
             trackedObjects[updatedImage.referenceImage.name].transform.rotation = updatedImage.transform.rotation;
+            debug.text += "Updated Image";
         }
 
         foreach (var removedImage in args.removed)
         {
             trackedObjects[removedImage.referenceImage.name].SetActive(false);
+            debug.text += "Removed Image";
         }
     }
 
