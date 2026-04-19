@@ -1,10 +1,13 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class FlipbookManager : MonoBehaviour
 {
     private ARCamera arCamera;
-    private List<Color[]> savedTextures = new List<Color[]>();
+    private List<FlipbookFrameData> savedFrames = new List<FlipbookFrameData>();
+
+    public TextMeshProUGUI debugText;
 
     private void Awake()
     {
@@ -17,14 +20,22 @@ public class FlipbookManager : MonoBehaviour
         flipbookTexture = new Texture2D(arCamera.CamTexture.width, arCamera.CamTexture.height);
 
     }
-    public Material testMat;
+    public Material imageDisplayMat;
     private Texture2D flipbookTexture;
     public void SaveImage()
     {
-        //flipbookTexture = new Texture2D(arCamera.CamTexture.width, arCamera.CamTexture.height);
-
         var pixels = arCamera.GetCurrentFramePixels();
-        savedTextures.Add(pixels);
+        var gpsPos = arCamera.CurrentGps;
+        Vector2 acc = arCamera.GPSAccuracy;
+        FlipbookFrameData frameData = new FlipbookFrameData()
+        {
+            pixels = pixels,
+            gpsPosition = gpsPos,
+            horizontalAccuracy = acc.x,
+            verticalAccuracy = acc.y
+        };
+
+        savedFrames.Add(frameData);
     }
 
     public void TogglePlayFlipbook()
@@ -37,23 +48,45 @@ public class FlipbookManager : MonoBehaviour
     private bool playFlipbook = false;
     private void Update()
     {
-        if (playFlipbook == false) return;
+        if (playFlipbook == false)
+        {
+            debugText.text = arCamera.StatusString;
+            return;
+        }
         flipbookUpdateCountdown -= Time.deltaTime;
         if (flipbookUpdateCountdown > 0) return;
 
         flipbookUpdateCountdown = flipbookUpdateHz;
         FlipImage();
-
     }
 
     private int currentIndex = 0;
     private void FlipImage()
     {
-        if (savedTextures == null || savedTextures.Count == 0) return;
-        currentIndex = (currentIndex + 1) % savedTextures.Count;
+        if (savedFrames == null || savedFrames.Count == 0) return;
+        currentIndex = (currentIndex + 1) % savedFrames.Count;
 
-        flipbookTexture.SetPixels(savedTextures[currentIndex]);
+        flipbookTexture.SetPixels(savedFrames[currentIndex].pixels);
         flipbookTexture.Apply();
-        testMat.mainTexture = flipbookTexture;
+        imageDisplayMat.mainTexture = flipbookTexture;
+
+        debugText.text = savedFrames[currentIndex].StatusString();
+    }
+
+    public struct FlipbookFrameData
+    {
+        public Color[] pixels;
+        public Vector3 gpsPosition;
+
+        public float horizontalAccuracy;
+        public float verticalAccuracy;
+
+        public float azimuth;
+        public float pitch;
+
+        public string StatusString()
+        {
+            return $"IMAGE METADATA:\nLoc: {gpsPosition}\n(Horiz acc:{horizontalAccuracy}, Vert acc:{verticalAccuracy})\nAz:{azimuth}, pitch:{pitch}";
+        }
     }
 }
