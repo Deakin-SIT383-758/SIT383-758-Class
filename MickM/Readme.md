@@ -24,12 +24,22 @@ This is an extension of the week 1 workshop which consisted of displaying a mobi
 
 ### "Week 3 Prototype"
 
-The week 3 workshop consisted of the introduction to Photon Networking. 
+The week 3 workshop consisted of the introduction to Photon Networking. The prototype for the week 3 submission is instead the Range Invariant Markers component developed separately. 
 
-_This prototype is still in work_
+The intent of this component is to have physical markers in 3D space indicating a position at some (longer) range that will allow the user to look at them; in this case they are removed so the user can see the point of interest and an information box appears with contextual information.
 
-#### Extensions:
-TBA
+Full feature development repo:
+https://github.com/MickWPM/RangeInvariantMarkers
+
+#### Features:
+- Uses double as datatype for marker position for precision
+- Contains static conversion helper to confirm if they should be rendered and at what position
+- Rendering is based on markers being within an (optional) min and max range (ie. only render if more than 10m away and dont render if more than 10km away)
+- Rendering position is in line with object location but at a customisable render distance (eg. render all markers 15m from observer)
+- Rendering position respects real world position over derived rendering position if object is inside render distance
+- Marker rendering fades out over time as user is looking at the location, fading in over time as the user looks away
+- Fade in/out time customisable, as is the gaze warmup time, ie. how long a user needs to be looking at the marker before the fade out starts (and opposide for looking away for fade back in)
+- Gaze collision based on collider for marker visuals, separate text box collider considered when text box is visible in order to stop marker fading back in as user "looks away" to the info box.
 
 
 ### "Week 4 Prototype"
