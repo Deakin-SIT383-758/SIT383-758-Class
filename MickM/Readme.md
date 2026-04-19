@@ -24,7 +24,7 @@ This is an extension of the week 1 workshop which consisted of displaying a mobi
 
 ### "Week 3 Prototype"
 
-The week 3 workshop consisted of the introduction to Photon Networking. The prototype for the week 3 submission is instead the Range Invariant Markers component developed separately. 
+The week 3 workshop consisted of the introduction to Photon Networking. The prototype for the week 3 submission is instead the Range Invariant Markers component developed separately. *Note: The project for this submission is *MickM/RangeInvariantMarkers* and not */MickM/Week3* - the latter is just the workshop endstate and maintained for future reference.
 
 The intent of this component is to have physical markers in 3D space indicating a position at some (longer) range that will allow the user to look at them; in this case they are removed so the user can see the point of interest and an information box appears with contextual information.
 
