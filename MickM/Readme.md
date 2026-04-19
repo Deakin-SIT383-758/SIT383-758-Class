@@ -28,6 +28,9 @@ The week 3 workshop consisted of the introduction to Photon Networking. The prot
 
 The intent of this component is to have physical markers in 3D space indicating a position at some (longer) range that will allow the user to look at them; in this case they are removed so the user can see the point of interest and an information box appears with contextual information.
 
+Full feature development repo:
+https://github.com/MickWPM/RangeInvariantMarkers
+
 #### Features:
 - Uses double as datatype for marker position for precision
 - Contains static conversion helper to confirm if they should be rendered and at what position
