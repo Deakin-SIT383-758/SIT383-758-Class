@@ -1,10 +1,15 @@
 using UnityEngine;
 using Fusion;
+using TMPro;
 
 public class PlayerMovement : NetworkBehaviour
 {
     [SerializeField] private CharacterController ch;
     public float playerSpeed = 5f;
+
+    [Networked] public string PlayerName { get; set; }
+    [Networked] public Color PlayerColor { get; set; }
+    [SerializeField] private TextMeshPro nameTag;
 
     [SerializeField] private float jumpHeight = 1.5f;
     [SerializeField] private float gravity = -9.81f;
@@ -13,6 +18,16 @@ public class PlayerMovement : NetworkBehaviour
     private Vector3 velocity;
     private bool isGrounded;
     private bool jumpRequested;
+
+    public override void Spawned()
+    {
+        if (HasStateAuthority)
+        {
+            // Only the local player sets their own name/color
+            PlayerName = $"Player {Object.InputAuthority.PlayerId}";
+            PlayerColor = new Color(Random.value, Random.value, Random.value);
+        }
+    }
 
     public override void FixedUpdateNetwork()
     {
@@ -52,6 +67,16 @@ public class PlayerMovement : NetworkBehaviour
         if(movement != Vector3.zero)
         {
             transform.forward = movement;
+        }
+    }
+    
+    public override void Render()
+    {
+        // Update name tag visually (happens on all clients)
+        if (nameTag != null)
+        {
+            nameTag.text = PlayerName;
+            nameTag.color = PlayerColor;
         }
     }
 }
