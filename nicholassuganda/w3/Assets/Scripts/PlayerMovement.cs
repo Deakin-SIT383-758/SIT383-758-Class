@@ -23,7 +23,6 @@ public class PlayerMovement : NetworkBehaviour
     {
         if (HasStateAuthority)
         {
-            // Only the local player sets their own name/color
             PlayerName = $"Player {Object.InputAuthority.PlayerId}";
             PlayerColor = new Color(Random.value, Random.value, Random.value);
         }
@@ -72,7 +71,6 @@ public class PlayerMovement : NetworkBehaviour
     
     public override void Render()
     {
-        // Update name tag visually (happens on all clients)
         if (nameTag != null)
         {
             nameTag.text = PlayerName;
