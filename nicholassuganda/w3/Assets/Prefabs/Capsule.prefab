@@ -70,7 +70,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 25cf6e04dd569cb46a80c83bffc2fa0c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -165,6 +165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ch: {fileID: -7835101982087941874}
+  capsuleRenderer: {fileID: 7550070314679885691}
   playerSpeed: 5
   _PlayerName: 
   _PlayerColor: {r: 0.8792453, g: 0.058063243, b: 0.058063243, a: 0}

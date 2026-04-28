@@ -5,6 +5,7 @@ using TMPro;
 public class PlayerMovement : NetworkBehaviour
 {
     [SerializeField] private CharacterController ch;
+    [SerializeField] private MeshRenderer capsuleRenderer;
     public float playerSpeed = 5f;
 
     [Networked] public string PlayerName { get; set; }
@@ -75,6 +76,11 @@ public class PlayerMovement : NetworkBehaviour
         {
             nameTag.text = PlayerName;
             nameTag.color = PlayerColor;
+        }
+
+        if (capsuleRenderer != null)
+        {
+            capsuleRenderer.material.color = PlayerColor;
         }
     }
 }
