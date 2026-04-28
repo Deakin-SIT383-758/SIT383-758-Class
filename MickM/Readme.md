@@ -81,6 +81,9 @@ The integration in this prototype consists of:
 - Integrating terrain texture changes through Cesium Raster Overlay asset ID changes at runtime
 - Integrating terrain height detection to offset user ground position to prevent being stuck below ground (eg. when entering mountain areas)
 
+_Note for replication: Cesium requires a user key which has been excluded from git for security reasons. To use this project:_
+- [Create a Cesium Ion Account](https://ion.cesium.com/signup)
+- [Connect to Cesium inside Unity](https://cesium.com/learn/unity/unity-quickstart/#step-2-connect-to-cesium-ion)
 
 ### "Week 7 Prototype"
 
