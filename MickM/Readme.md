@@ -61,21 +61,29 @@ A third matching approach to test AI optimisations of the rotation invariance ma
 
 ### "Week 5 Prototype"
 
-...
+The week 5 submission is a custom implementation of C/D ratio for weight emulation in VR. This is based off a paper I did for SIT755 which looked at how we can emulate weight using best practices from both VR/AR development lessons learned and broader literature including psychology research findings.
 
-#### Extensions:
-...
+The link to the repo is [here](https://github.com/MickWPM/VRWeightEmulationPrototype). 
 
+The component itself consists of an individual item script which manages the C/D ratio and item specific parameters and a global weight emulation manager which implements the C/D ratio proposed in the paper. The resulting impact is a psycologically grounded emulation of weighty objects in VR which is easy to drag and drop into any project, flexibly managing physics implemenetations both with and without rigidbodies.
 
 
 ### "Week 6 Prototype"
 
-...
+The week 6 submission is the integration of Cesium within Unity. This allows full global scale heights and terrain shading within Unity. The Cesium package streams both heightmap and textures based on the georeference origin (lat/long).
 
-#### Extensions:
-...
+The integration in this prototype consists of:
+- Integrating VR into Cesium
+- Integrating zoom in/out using VR triggers, scaling zoom speed based on zoom level
+- Integrating VR scale changes as zoomout occurs to change interpupillary distance and make the terrain look "smaller" (rather than just being high up)
+- Creating "movement" control by reading controller stick position and updating georeference origin lat/long (this helps Cesium render correctly and avoids floating point issues)
+- Scaling movement speed based off zoom level.
+- Integrating terrain texture changes through Cesium Raster Overlay asset ID changes at runtime
+- Integrating terrain height detection to offset user ground position to prevent being stuck below ground (eg. when entering mountain areas)
 
-
+_Note for replication: Cesium requires a user key which has been excluded from git for security reasons. To use this project:_
+- [Create a Cesium Ion Account](https://ion.cesium.com/signup)
+- [Connect to Cesium inside Unity](https://cesium.com/learn/unity/unity-quickstart/#step-2-connect-to-cesium-ion)
 
 ### "Week 7 Prototype"
 
