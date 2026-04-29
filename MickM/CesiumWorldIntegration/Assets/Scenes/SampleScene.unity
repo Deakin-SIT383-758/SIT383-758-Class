@@ -269,6 +269,7 @@ MonoBehaviour:
   zoomOutButton: 8192
   zoomInButton: 2097152
   mapToggleButton: 1
+  wristText: {fileID: 877412464}
 --- !u!114 &160104496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -867,7 +868,7 @@ GameObject:
   - component: {fileID: 877412465}
   - component: {fileID: 877412464}
   m_Layer: 0
-  m_Name: Text (TMP)
+  m_Name: WristText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

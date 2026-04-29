@@ -1,5 +1,6 @@
 using CesiumForUnity;
 using Oculus.Platform;
+using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -54,6 +55,8 @@ public class CesiumController : MonoBehaviour
         UpdatePlayerScale(playerScale);
 
         CheckMapToggle();
+
+        UpdateWristText($"Latitude: {geoReference.latitude:F5}\nLongitude: {geoReference.longitude:F5}");
     }
 
 
@@ -138,4 +141,10 @@ public class CesiumController : MonoBehaviour
         return 0f;
     }
     #endregion
+
+    public TextMeshPro wristText;
+    public void UpdateWristText(string text)
+    {
+        wristText.text = text;
+    }
 }
