@@ -18,7 +18,7 @@ public class PassThruScript : MonoBehaviour
         {
             fullPassThruEnabled = true;
             partialPassThruEnabled = true;
-            passThruLayer.enabled = true;
+            passThruLayer.enabled = false;
         }
 
         if (partialThruObjects == null && fullThruObjects == null)
@@ -76,6 +76,10 @@ public class PassThruScript : MonoBehaviour
         foreach (GameObject gameObject in partialThruObjects)
         {
             gameObject.SetActive(partialPassThruEnabled);
+        }
+        foreach (GameObject gameObject in fullThruObjects)
+        {
+            gameObject.SetActive(true);
         }
     }
 }
