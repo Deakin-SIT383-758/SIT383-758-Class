@@ -87,16 +87,28 @@ _Note for replication: Cesium requires a user key which has been excluded from g
 
 ### "Week 7 Prototype"
 
-...
+The week 7 and 8 prototypes are in a single repo: _ARVRTransition_.
 
-#### Extensions:
-...
+The week 7 prototype is the transition iteself. The transition involves movement from a location in AR to a VR player location (located inside an AR castle object)
 
+The user can move the AR castle around and the transition always brings them to the VR player location.
+This compontent includes:
+- Smooth (time adjustable) transition from AR to VR and VR to AR (Trigger squeeze to commence, release to return)
+- AR scene opens only at the point that we are almost in AR; this avoids sickness from AR objects moving and scaling while our environment remains static
+- VR and AR only elements; AR only including the obejct selection box. VR only including skybox, additional castle decorations and ambeint sound
 
 
 ### "Week 8 Prototype"
 
-...
+The week 7 and 8 prototypes are in a single repo: _ARVRTransition_.
 
-#### Extensions:
-...
+The week 8 component maps real world pixels to texture within the game world. As the user moves around an AR object, when they release the object:
+- The pixel real world camera frame is recorded.
+- Four positions, aligned to the corners of a quad in unity space, are translated into VR screen space. This is done with the support of camera intrinsics to avoid FOV issues.
+- A custom shader maps real world pixel colours to texture colour using linear interpolation between the real world-image coordinates of the ground plane.
+
+This component took significant planning and testing to understand the camera component capturing and developing the approach to map edges of the ground plane to image location; the end result was an incredibly rewarding bit of immersion.
+
+_Generative AI disclaimer_: The camera intrisics mapping and shader (complete) were generated using Gemini AI. 
+- The latter was done as I am unfamiliar with HLSL; I described the maths I want ("Linear interpolation between real world points mapped to image locations that correspond with edges of the plane") and reviewed the generated code to confirm the maths was correct.
+- The former was asked as "how do I apply the camera intrinsics to offset the camera element image warping" as the initial image when mapped using the shader was very zoomed in due to the difference between eye rendered images and the fully captured image.
