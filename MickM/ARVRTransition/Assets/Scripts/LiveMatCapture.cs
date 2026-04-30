@@ -53,8 +53,7 @@ public class LiveMatCapture : MonoBehaviour
     //To warp the texture we need 4 reference points; we then pass them through to a custom shader
     //to do custom transformations for pixel colours
     public Transform[] cornerTransforms; 
-    public Camera centreVRAnchor; 
-    
+    public Camera centreVRAnchor;
     void FreezeTexture()
     {
         Texture currentFrame = cameraAccess.GetTexture();
