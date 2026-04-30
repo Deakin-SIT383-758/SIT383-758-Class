@@ -7,25 +7,27 @@ public class LiveMatCapture : MonoBehaviour
 {
     public PassthroughCameraAccess cameraAccess;
     public MeshRenderer matRenderer;
-    private Material _warpMaterial;
-    private bool _isAccessAvailable = false;
+    private Material warpMaterial;
+    private bool cameraAccessAvailable = false;
 
+    public OVRInput.Button setGroundTextureButton = OVRInput.Button.SecondaryIndexTrigger;
+    public MeshRenderer debugRenderer;
     void Start()
     {
-        _warpMaterial = matRenderer.material;
+        warpMaterial = matRenderer.material;
         leftWristText.text = "Startup. No access available";
     }
 
     public TextMeshPro leftWristText;
     void Update()
     {
-        if (!_isAccessAvailable)
+        if (!cameraAccessAvailable)
         {
             Texture cameraTex = cameraAccess.GetTexture();
             if (cameraTex != null)
             {
-                _warpMaterial.SetTexture("_MainTex", cameraTex);
-                _isAccessAvailable = true;
+                warpMaterial.SetTexture("_MainTex", cameraTex);
+                cameraAccessAvailable = true;
                 Debug.Log("Camera Access Active!");
 
                 leftWristText.text = "Camera Access Active";
@@ -33,7 +35,7 @@ public class LiveMatCapture : MonoBehaviour
             return;
         }
 
-        if (OVRInput.GetDown(OVRInput.Button.SecondaryIndexTrigger))
+        if (OVRInput.GetDown(setGroundTextureButton))
         {
             FreezeTexture();
         }
@@ -45,9 +47,10 @@ public class LiveMatCapture : MonoBehaviour
         Texture2D staticCopy = new Texture2D(currentFrame.width, currentFrame.height, TextureFormat.RGBA32, false);
         Graphics.CopyTexture(currentFrame, staticCopy);
 
-        _warpMaterial.SetTexture("_BaseMap", staticCopy);
-        //this.enabled = false;
-        
+        warpMaterial.SetTexture("_BaseMap", staticCopy);
+
+        debugRenderer.material.SetTexture("_BaseMap", staticCopy);
+
         leftWristText.text = $"Diorama Floor Frozen. texture size: {currentFrame.width} x {currentFrame.height}";
     }
 }
