@@ -4,7 +4,12 @@ using Fusion;
 public class PlayerMovement : NetworkBehaviour
 {
     [SerializeField] private CharacterController ch;
-    public float moveSpeed = 5f;
+    public float moveSpeed;
+
+    void Start()
+    {
+        moveSpeed = Random.Range(5,10);
+    }
 
     public override void FixedUpdateNetwork()
     {
