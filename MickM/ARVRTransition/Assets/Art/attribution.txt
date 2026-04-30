@@ -1,3 +1,8 @@
-GeminiGeneratedSkybox.png - Placeholder texture generated through Gemini pro 
+GeminiGeneratedSkybox.png:
+Placeholder texture generated through Gemini pro 
 
-LowlyPoly grass - LowlyPoly through Unity Asset Store https://assetstore.unity.com/packages/2d/textures-materials/glass/stylized-grass-texture-153153
+LowlyPoly grass:
+LowlyPoly through Unity Asset Store https://assetstore.unity.com/packages/2d/textures-materials/glass/stylized-grass-texture-153153
+
+medieval-ambience.mp3:
+Sound Effect by ramonmineiro (Freesound) from https://pixabay.com/sound-effects/nature-medieval-village-atmosphere-79282/
