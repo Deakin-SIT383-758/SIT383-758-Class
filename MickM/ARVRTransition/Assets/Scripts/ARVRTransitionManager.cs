@@ -1,25 +1,21 @@
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
 public class ARVRTransitionManager : MonoBehaviour
 {
-    [Header("References")]
     [SerializeField] private OVRCameraRig cameraRig;
     [SerializeField] private OVRPassthroughLayer passthroughLayer;
     [SerializeField] private Camera centreVRCamera;
 
-
-    [Header("Transition Settings")]
     [SerializeField] private float transitionSpeed = 1.5f;
 
-    [Header("Perspective Settings")]
     [SerializeField] private Transform vrPositionTarget; 
     [SerializeField] private float vrWorldScale = 5.0f;
     private Vector3 vrPositionOffset;
     private float nearClipInitial, farClipInitial;
+    [SerializeField] private float nearClipZoomed = 0.001f;
+    [SerializeField] private float farClipZoomed = 20f;
 
-    [Header("Visibility Lists")]
     [SerializeField] private List<GameObject> _arOnlyObjects;
     [SerializeField] private List<GameObject> _vrOnlyObjects;
 
@@ -30,12 +26,12 @@ public class ARVRTransitionManager : MonoBehaviour
     {
         nearClipInitial = centreVRCamera.nearClipPlane;
         farClipInitial = centreVRCamera.farClipPlane;
-        SetLerpPositions();
+        initialRigPos = cameraRig.transform.localPosition;
+        SetLerpPosition();
     }
 
-    void SetLerpPositions()
+    void SetLerpPosition()
     {
-        initialRigPos = cameraRig.transform.localPosition;
         vrPositionOffset = vrPositionTarget.position - initialRigPos;
     }
 
@@ -45,7 +41,7 @@ public class ARVRTransitionManager : MonoBehaviour
     {
         if (OVRInput.GetDown(transitionButton))
         {
-            SetLerpPositions();
+            SetLerpPosition();
         }
 
         bool holdingTransitionButton = OVRInput.Get(transitionButton);
@@ -82,7 +78,7 @@ public class ARVRTransitionManager : MonoBehaviour
         foreach (var obj in _vrOnlyObjects) if (obj.activeSelf != showVR) obj.SetActive(showVR);
 
         //Update camera clip planes
-        centreVRCamera.nearClipPlane = Mathf.Lerp(nearClipInitial, 0.01f, smoothedT);
-        centreVRCamera.farClipPlane = Mathf.Lerp(farClipInitial, 20f, smoothedT);
+        centreVRCamera.nearClipPlane = Mathf.Lerp(nearClipInitial, nearClipZoomed, smoothedT);
+        centreVRCamera.farClipPlane = Mathf.Lerp(farClipInitial, farClipZoomed, smoothedT);
     }
 }
