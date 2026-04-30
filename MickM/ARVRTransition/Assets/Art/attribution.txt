@@ -1,1 +1,3 @@
 GeminiGeneratedSkybox.png - Placeholder texture generated through Gemini pro 
+
+LowlyPoly grass - LowlyPoly through Unity Asset Store https://assetstore.unity.com/packages/2d/textures-materials/glass/stylized-grass-texture-153153
