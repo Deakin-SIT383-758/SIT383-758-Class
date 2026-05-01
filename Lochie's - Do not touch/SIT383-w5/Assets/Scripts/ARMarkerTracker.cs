@@ -19,11 +19,13 @@ public class ARMarkerTracker : MonoBehaviour
     void OnEnable()
     {
         arTrackedManager.trackedImagesChanged += OnImageChanged;
+        debug.text += "Added Image";
     }
 
     void OnDisable()
     {
         arTrackedManager.trackedImagesChanged -= OnImageChanged;
+        debug.text += "Removed Image";
     }
 
     private void OnImageChanged(ARTrackedImagesChangedEventArgs args)
@@ -31,7 +33,6 @@ public class ARMarkerTracker : MonoBehaviour
         foreach(var addedImage in args.added)
         {
             trackedObjects[addedImage.referenceImage.name].SetActive(true);
-            debug.text += "Added Image";
         }
 
         foreach (var updatedImage in args.updated)
@@ -40,13 +41,11 @@ public class ARMarkerTracker : MonoBehaviour
 
             trackedObjects[updatedImage.referenceImage.name].transform.position = updatedImage.transform.position;
             trackedObjects[updatedImage.referenceImage.name].transform.rotation = updatedImage.transform.rotation;
-            debug.text += "Updated Image";
         }
 
         foreach (var removedImage in args.removed)
         {
             trackedObjects[removedImage.referenceImage.name].SetActive(false);
-            debug.text += "Removed Image";
         }
     }
 
