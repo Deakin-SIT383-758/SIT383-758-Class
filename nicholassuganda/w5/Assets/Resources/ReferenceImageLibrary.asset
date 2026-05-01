@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 848409ee8ba454f42a5ddff137688a27, type: 3}
+  m_Name: ReferenceImageLibrary
+  m_EditorClassIdentifier: 
+  m_GuidLow: 5136273099282976097
+  m_GuidHigh: 11832892995008521145
+  m_DataStore:
+    m_Storage: []
+  m_Images:
+  - m_SerializedGuid:
+      m_GuidLow: 4840851351050644549
+      m_GuidHigh: 847865589284140209
+    m_SerializedTextureGuid:
+      m_GuidLow: 1104507915043045922
+      m_GuidHigh: 4113313770304151930
+    m_Size: {x: 0.11744966, y: 0.1}
+    m_SpecifySize: 1
+    m_Name: rubikscube
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 4670251510902185991
+      m_GuidHigh: 1663387360610782135
+    m_SerializedTextureGuid:
+      m_GuidLow: 14430846567717832529
+      m_GuidHigh: 16920549852222956169
+    m_Size: {x: 0.13157895, y: 0.1}
+    m_SpecifySize: 1
+    m_Name: marker
+    m_Texture: {fileID: 0}
