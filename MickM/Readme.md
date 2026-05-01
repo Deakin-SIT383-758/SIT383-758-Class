@@ -61,34 +61,54 @@ A third matching approach to test AI optimisations of the rotation invariance ma
 
 ### "Week 5 Prototype"
 
-...
+The week 5 submission is a custom implementation of C/D ratio for weight emulation in VR. This is based off a paper I did for SIT755 which looked at how we can emulate weight using best practices from both VR/AR development lessons learned and broader literature including psychology research findings.
 
-#### Extensions:
-...
+The link to the repo is [here](https://github.com/MickWPM/VRWeightEmulationPrototype). 
 
+The component itself consists of an individual item script which manages the C/D ratio and item specific parameters and a global weight emulation manager which implements the C/D ratio proposed in the paper. The resulting impact is a psycologically grounded emulation of weighty objects in VR which is easy to drag and drop into any project, flexibly managing physics implemenetations both with and without rigidbodies.
 
 
 ### "Week 6 Prototype"
 
-...
+The week 6 submission is the integration of Cesium within Unity. This allows full global scale heights and terrain shading within Unity. The Cesium package streams both heightmap and textures based on the georeference origin (lat/long).
 
-#### Extensions:
-...
+The integration in this prototype consists of:
+- Integrating VR into Cesium
+- Integrating zoom in/out using VR triggers, scaling zoom speed based on zoom level
+- Integrating VR scale changes as zoomout occurs to change interpupillary distance and make the terrain look "smaller" (rather than just being high up)
+- Creating "movement" control by reading controller stick position and updating georeference origin lat/long (this helps Cesium render correctly and avoids floating point issues)
+- Scaling movement speed based off zoom level.
+- Integrating terrain texture changes through Cesium Raster Overlay asset ID changes at runtime
+- Integrating terrain height detection to offset user ground position to prevent being stuck below ground (eg. when entering mountain areas)
 
-
+_Note for replication: Cesium requires a user key which has been excluded from git for security reasons. To use this project:_
+- [Create a Cesium Ion Account](https://ion.cesium.com/signup)
+- [Connect to Cesium inside Unity](https://cesium.com/learn/unity/unity-quickstart/#step-2-connect-to-cesium-ion)
 
 ### "Week 7 Prototype"
 
-...
+The week 7 and 8 prototypes are in a single repo: _ARVRTransition_.
 
-#### Extensions:
-...
+The week 7 prototype is the transition iteself. The transition involves movement from a location in AR to a VR player location (located inside an AR castle object)
 
+The user can move the AR castle around and the transition always brings them to the VR player location.
+This compontent includes:
+- Smooth (time adjustable) transition from AR to VR and VR to AR (Trigger squeeze to commence, release to return)
+- AR scene opens only at the point that we are almost in AR; this avoids sickness from AR objects moving and scaling while our environment remains static
+- VR and AR only elements; AR only including the obejct selection box. VR only including skybox, additional castle decorations and ambeint sound
 
 
 ### "Week 8 Prototype"
 
-...
+The week 7 and 8 prototypes are in a single repo: _ARVRTransition_.
 
-#### Extensions:
-...
+The week 8 component maps real world pixels to texture within the game world. As the user moves around an AR object, when they release the object:
+- The pixel real world camera frame is recorded.
+- Four positions, aligned to the corners of a quad in unity space, are translated into VR screen space. This is done with the support of camera intrinsics to avoid FOV issues.
+- A custom shader maps real world pixel colours to texture colour using linear interpolation between the real world-image coordinates of the ground plane.
+
+This component took significant planning and testing to understand the camera component capturing and developing the approach to map edges of the ground plane to image location; the end result was an incredibly rewarding bit of immersion.
+
+_Generative AI disclaimer_: The camera intrisics mapping and shader (complete) were generated using Gemini AI. 
+- The latter was done as I am unfamiliar with HLSL; I described the maths I want ("Linear interpolation between real world points mapped to image locations that correspond with edges of the plane") and reviewed the generated code to confirm the maths was correct.
+- The former was asked as "how do I apply the camera intrinsics to offset the camera element image warping" as the initial image when mapped using the shader was very zoomed in due to the difference between eye rendered images and the fully captured image.
