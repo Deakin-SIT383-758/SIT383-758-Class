@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 4215010222755271636}
   - component: {fileID: 6817223102355587256}
   - component: {fileID: 8356616044679456007}
+  - component: {fileID: 6129532945560220185}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -158,6 +159,7 @@ MonoBehaviour:
   NetworkedBehaviours:
   - {fileID: 6817223102355587256}
   - {fileID: 8356616044679456007}
+  - {fileID: 6129532945560220185}
   ForceRemoteRenderTimeframe: 0
 --- !u!114 &6817223102355587256
 MonoBehaviour:
@@ -190,3 +192,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ch: {fileID: 8647389621485796796}
   playerspeed: 5
+--- !u!114 &6129532945560220185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8627009256410931295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ebc6eb34fae09e45b7b8cdc11aa81a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trailPrefab: {fileID: 6494082020075340789, guid: ffb599c9b48bec2448ae64a96ab9d46f, type: 3}
+  spawnEverySeconds: 0.4
+  trailLifetime: 4
