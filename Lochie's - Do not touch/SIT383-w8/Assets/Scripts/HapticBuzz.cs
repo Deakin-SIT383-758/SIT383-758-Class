@@ -1,16 +1,22 @@
 using UnityEngine;
 using Oculus.Haptics;
+using Unity.VisualScripting;
 
 public class HapticBuzz : MonoBehaviour
 {
-    public HapticClip hapClip;
-    HapticClipPlayer player;
+    public GameObject leftObject;
+    public GameObject rightObject;
+    public HapticClip rightHapClip;
+    public HapticClip leftHapClip;
+    HapticClipPlayer RightPlayer;
+    HapticClipPlayer LeftPlayer;
     float timeRemaining = 0.0f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        player = new HapticClipPlayer(hapClip);
+        RightPlayer = new HapticClipPlayer(rightHapClip);
+        LeftPlayer = new HapticClipPlayer(leftHapClip);
         //player.Play(Controller.Left);
     }
 
@@ -20,13 +26,21 @@ public class HapticBuzz : MonoBehaviour
         
     }
 
-    void OTriggerStay(Collider other)
+    void OnTriggerStay(Collider other)
     {
         timeRemaining -= Time.deltaTime;
         if(timeRemaining < 0.0f)
         {
-            player.Play(Controller.Left);
-            timeRemaining = player.clipDuration;
+            if(other.gameObject == leftObject)
+            {
+                LeftPlayer.Play(Controller.Left);
+                timeRemaining = LeftPlayer.clipDuration;
+            }
+            else if(other.gameObject == rightObject)
+            {
+                RightPlayer.Play(Controller.Right);
+                timeRemaining = RightPlayer.clipDuration;
+            }
         }
     }
 }
