@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QCARConfig>
+  <Tracking>
+    <ImageTarget name="eath" size="32.000000 32.000000" />
+    <ImageTarget name="fire" size="32.000000 32.000000" />
+    <ImageTarget name="my-img8bit-com-effect" size="0.500000 0.500000" />
+  </Tracking>
+</QCARConfig>
