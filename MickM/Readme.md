@@ -112,3 +112,16 @@ This component took significant planning and testing to understand the camera co
 _Generative AI disclaimer_: The camera intrisics mapping and shader (complete) were generated using Gemini AI. 
 - The latter was done as I am unfamiliar with HLSL; I described the maths I want ("Linear interpolation between real world points mapped to image locations that correspond with edges of the plane") and reviewed the generated code to confirm the maths was correct.
 - The former was asked as "how do I apply the camera intrinsics to offset the camera element image warping" as the initial image when mapped using the shader was very zoomed in due to the difference between eye rendered images and the fully captured image.
+
+
+### "Overflow Prototype"
+
+This component consists of a wrist mounted quick menu with the ability to pull out detailed panels. The broad intent is a simple "quick menu" that also has the ability to easily gain detailed information or advanced interactions (beginner vs power user). The context as presented is for a VR Lecturer looking through lecture control tabs (dashboard, scrollable lecture notes, attendees and lecture controls) however the system is generic for any case where you have a "quick menu" of common actions and less common but more detailed actions (or reference requirements) that you can access separately. 
+
+The functionality developed is:
+- The wrist menu is activated by looking at your wrist, similar to looking at a watch. The functionality is via angle comparison between the wrist menu and the look direction. This facilitates menu interaction with low cognitive overhead.
+- The wrist menu is interactable with clear buttons and hover effect feedback. Each button opens a panel on the wrist menu with some commonly required quick actions.
+- When additional information is required, the user can grab one of the "handles" (top and right sides of the wrist menu) and pull them out to create a larger detailed screen. This is a separate screen designed with additional detail. The screen can be freely positioned in virtual space and referenced /interacted with as required.
+- When the larger screen is no longer required, the user simply grabs the panel and "puts it back in" the wrist menu. The user can pull it out again later as required.
+
+The code for this is available at [VRDesignDemo](https://github.com/MickWPM/VRDesignDemo)
