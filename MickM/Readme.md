@@ -122,4 +122,6 @@ The functionality developed is:
 - The wrist menu is activated by looking at your wrist, similar to looking at a watch. The functionality is via angle comparison between the wrist menu and the look direction. This facilitates menu interaction with low cognitive overhead.
 - The wrist menu is interactable with clear buttons and hover effect feedback. Each button opens a panel on the wrist menu with some commonly required quick actions.
 - When additional information is required, the user can grab one of the "handles" (top and right sides of the wrist menu) and pull them out to create a larger detailed screen. This is a separate screen designed with additional detail. The screen can be freely positioned in virtual space and referenced /interacted with as required.
-- When the larger screen is no longer required, the user simply grabs the panel and "puts it back in" the wrist menu. The user can pull it out again later as required. 
+- When the larger screen is no longer required, the user simply grabs the panel and "puts it back in" the wrist menu. The user can pull it out again later as required.
+
+The code for this is available at [VRDesignDemo](https://github.com/MickWPM/VRDesignDemo)
