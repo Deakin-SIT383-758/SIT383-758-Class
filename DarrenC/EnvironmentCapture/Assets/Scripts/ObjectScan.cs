@@ -101,6 +101,7 @@ public class ObjectScan : MonoBehaviour
             yield return new WaitForEndOfFrame();
 
             gameObject.GetComponent<MeshRenderer>().material.mainTexture = depthCameraManager.getColourTexture();
+            gameObject.GetComponent<MeshRenderer>().material.SetTexture("_maskTexture", depthCameraManager.getDepthTexture());
             RefreshData(depthCameraManager.getDepthTexture());
 
             if (touch)

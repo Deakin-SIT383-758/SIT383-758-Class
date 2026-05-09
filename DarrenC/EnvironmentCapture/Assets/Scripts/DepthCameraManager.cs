@@ -1,6 +1,7 @@
 using UnityEngine;
 using Unity.InferenceEngine;
 using Unity.AppUI.UI;
+using System.ComponentModel;
 
 public class DepthCameraManager : MonoBehaviour
 {
@@ -9,6 +10,12 @@ public class DepthCameraManager : MonoBehaviour
 
     [Tooltip("For debugging, a material to show the depth image")]
     public Material depthImageMaterial;
+
+    [Tooltip("For debugging, a material to show the mask image")]
+    public Material maskImageMaterial;
+
+    public Material holoMaterial;
+    public int maskThreshold; // threshold between masked and unmasked pixels from depth image
 
     [Tooltip("The depth estimation model")]
     public ModelAsset estimationModel;
@@ -78,6 +85,17 @@ public class DepthCameraManager : MonoBehaviour
         if (depthImageMaterial != null)
         {
             depthImageMaterial.mainTexture = depthTexture;
+        }
+
+        if (maskImageMaterial != null)
+        {
+            maskImageMaterial.mainTexture = depthTexture;
+        }
+
+        if (holoMaterial != null)
+        {
+            holoMaterial.mainTexture = depthTexture;
+            holoMaterial.SetTexture("_maskTexture", depthTexture);
         }
     }
 
