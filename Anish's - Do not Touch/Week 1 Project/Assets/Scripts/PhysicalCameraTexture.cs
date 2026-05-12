@@ -6,14 +6,46 @@ using UnityEngine;
 using UnityEngine.Android;
 #endif
 
+using TMPro;
+
 public class PhysicalCameraTexture : MonoBehaviour
 {
     public Material camTexMaterial;
-
     private WebCamTexture webcamTexture;
+    public TextMeshProUGUI outputText;
+    private int currentCamera = 0;
+
+    private void ShowCameras()
+    {
+        outputText.text = "";
+
+        foreach (WebCamDevice d in WebCamTexture.devices)
+        {
+            outputText.text += d.name +
+                (d.name == webcamTexture?.deviceName ? "*" : "") +
+                "\n";
+        }
+    }
+
+    public void NextCamera()
+    {
+        currentCamera =
+            (currentCamera + 1) % WebCamTexture.devices.Length;
+
+        webcamTexture.Stop();
+
+        webcamTexture.deviceName =
+            WebCamTexture.devices[currentCamera].name;
+
+        webcamTexture.Play();
+
+        ShowCameras();
+    }
 
     void Update()
     {
+        ShowCameras();
+
         if (webcamTexture == null)
         {
             webcamTexture = new WebCamTexture();
@@ -26,7 +58,7 @@ public class PhysicalCameraTexture : MonoBehaviour
 #endif
         }
 
-        if (webcamTexture != null && !webcamTexture.isPlaying)
+        if (!webcamTexture.isPlaying)
         {
             camTexMaterial.mainTexture = webcamTexture;
             webcamTexture.Play();
